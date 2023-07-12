@@ -1,15 +1,17 @@
+import {MutableRefObject} from "react";
 
-export default function NormalFormInput({type, required, defaultVal, placeholder, id, name, width}: {
+export default function NormalFormInput({type, required, defaultVal, placeholder, id, name, width, innerRef}: {
     type: string,
     required?: boolean,
     defaultVal?: string
     placeholder?: string,
     id: string,
     name:  string,
-    width?: string
+    width?: string,
+    innerRef?: MutableRefObject<HTMLInputElement | null>
 }) {
     return (
-        <input type={type} required={required} defaultValue={defaultVal} id={id} name={name} placeholder={placeholder}
-               className={`${width ? width : 'min-w-full'} bg-zinc-900  text-gray-100 cursor-text flex text-[0.81rem] h-8 py-1 px-3 w-96 rounded border-[1px] hover:border-[2px] border-zinc-600 focus:outline-none focus:border-[4px] focus:border-red-800`}/>
+        <input type={type} required={required} defaultValue={defaultVal} id={id} name={name} placeholder={placeholder} ref={innerRef}
+               className={`${width ? width : 'w-full'} bg-zinc-900  text-gray-100 cursor-text flex text-[0.81rem] h-8 py-1 px-3 w-96 rounded border-[1px] hover:border-[2px] border-zinc-600 focus:outline-none focus:border-[4px] focus:border-red-800`}/>
     )
 }
