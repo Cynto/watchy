@@ -3,6 +3,7 @@ import {useRef} from "react";
 import NormalFormInput from "@app/(components)/NormalFormInput";
 import LabelWithInput from "@app/(components)/LabelWithInput";
 import {FormEvent} from "react";
+import validateUserRegistration from "@app/(validators)/validateUserRegistration";
 
 export default function UserRegisterForm() {
     const emailRef = useRef<HTMLInputElement | null>(null)
@@ -17,17 +18,19 @@ export default function UserRegisterForm() {
         e.preventDefault()
 
         const userPayload = {
-            email: emailRef.current?.value,
-            username: usernameRef.current?.value,
-            password: passwordRef.current?.value,
-            passwordConfirm: passwordConfirmRef.current?.value,
+            email: emailRef.current ? emailRef.current.value : '',
+            username: usernameRef.current ? usernameRef.current.value : '',
+            password: passwordRef.current ? passwordRef.current.value : '',
+            passwordConfirm: passwordConfirmRef.current ? passwordConfirmRef.current.value : '',
             dob: {
-                day: dayRef.current?.value,
-                month: monthRef.current?.value,
-                year: yearRef.current?.value
+                day: dayRef.current ? dayRef.current.value : '',
+                month: monthRef.current ? monthRef.current.value : '',
+                year: yearRef.current ? yearRef.current.value : ''
             }
         };
 
+        const errs = validateUserRegistration(userPayload);
+        console.log(errs)
     }
 
     return (<form className="grid grid-cols-1 gap-4" onSubmit={handleSubmit}>
