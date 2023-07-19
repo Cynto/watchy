@@ -1,38 +1,53 @@
+const validateUserRegistration = (
+  payload:
+    | {
+        email: string;
+        username: string;
+        password: string;
+        passwordConfirm: string;
+        dob: {
+          day: string;
+          month: string;
+          year: string;
+        };
+      }
+    | { [key: string]: string },
+  errs: {
+    email: string;
 
-const validateUserRegistration = (payload: {
-    email: string,
-    username: string,
-    password: string,
-    passwordConfirm: string,
-    dob: {
-        day: string,
-        month: string,
-        year: string
-    }
-}) => {
-    const {email, username, password, passwordConfirm, dob} = payload;
-    const errors = [];
+    username: string;
 
+    password: string;
 
+    passwordConfirm: string;
 
-    //Validate email
-    if(!email.match(/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/)) {
-        const err = {
-            field: 'email',
-            message: 'Email provided must be valid.'
-        }
-        errors.push(err)
-    }
+    dob: string;
+  },
+) => {
+  const { email, username, password, passwordConfirm, dob } = payload;
 
-    // Validate username
-    if(username.length < 3 || username.length > 16) {
-        const err = {
-            field: 'username',
-            message: 'Username provided must contain between 3 to 16 characters.'
-        }
-        errors.push(err)
-    }
+  let errors = { ...errs };
 
-    return errors
-}
+  //Validate email
+  if (
+    email !== undefined &&
+    !email.match(/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/)
+  ) {
+    errors.email = "Email address provided must be valid.";
+  } else if (email !== undefined) errors.email = "";
+
+  // Validate username
+  if (username !== undefined && (username.length < 3 || username.length > 16)) {
+    errors.username =
+      "Username provided must contain between 3 to 16 characters.";
+  } else if (
+    username !== undefined &&
+    !username.match(/^(?=.*[a-zA-Z])[a-zA-Z0-9_-]+$/)
+  ) {
+    errors.username =
+      "Usernames must include at least one letter and can contain numbers, hyphens, and underscores.";
+  } else if (username !== undefined) errors.username = "";
+
+  return errors;
+};
 export default validateUserRegistration;
