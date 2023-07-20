@@ -37,6 +37,15 @@ export default function UserRegisterForm() {
   const handleChange = (ref: MutableRefObject<HTMLInputElement>) => {
     let payload: { [key: string]: string } = {};
     payload[ref.current.id] = ref.current.value;
+    if (ref.current.id === 'passwordConfirm' || ref.current.id === 'password') {
+      payload = {
+        passwordConfirm: passwordConfirmRef.current
+          ? passwordConfirmRef.current.value
+          : '',
+        password: passwordRef.current ? passwordRef.current.value : '',
+      };
+    }
+
     if (ref.current.value !== '') {
       const errs = validateUserRegistration(payload, formErrors);
       const errVals = Object.values(errs);
