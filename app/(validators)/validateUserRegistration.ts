@@ -75,7 +75,36 @@ const validateUserRegistration = (
   )
     errors.passwordConfirm = '';
 
-  console.log(errors);
+  // Validate DOB
+  function isOverThirteen(birthday: Date) {
+    let ageDifMs = Date.now() - birthday.getTime();
+    let ageDate = new Date(ageDifMs);
+    let age = Math.abs(ageDate.getUTCFullYear() - 1970);
+    return age >= 13;
+  }
+  if (
+    typeof dob !== 'string' &&
+    dob &&
+    dob.day === '' &&
+    dob.month === '' &&
+    dob.year === ''
+  ) {
+    errors.dob = 'Please enter a valid date.';
+  } else if (typeof dob !== 'string' && dob) {
+    const dobDate = new Date(
+      Number(dob.year),
+      Number(dob.month) - 1,
+      Number(dob.day),
+    );
+
+    if (!isOverThirteen(dobDate)) {
+      errors.dob =
+        "We're sorry, but you need to be at least 13 years old to use this site. Please come back when you're old enough!";
+    } else errors.dob = '';
+    if (Number(dob.year) < 1900) {
+      errors.dob = 'Please enter a valid date.';
+    }
+  }
   return errors;
 };
 export default validateUserRegistration;
