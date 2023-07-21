@@ -89,7 +89,6 @@ export default function UserRegisterForm() {
         id={'email'}
         name={'Email'}
         type={'text'}
-        required
         innerRef={emailRef}
         inputError={formErrors.email}
         handleChange={handleChange}
@@ -98,7 +97,6 @@ export default function UserRegisterForm() {
         id={'username'}
         name={'Username'}
         type={'text'}
-        required
         innerRef={usernameRef}
         inputError={formErrors.username}
         handleChange={handleChange}
@@ -107,7 +105,6 @@ export default function UserRegisterForm() {
         id={'password'}
         name={'Password'}
         type={'password'}
-        required
         innerRef={passwordRef}
         inputError={formErrors.password}
         handleChange={handleChange}
@@ -116,7 +113,6 @@ export default function UserRegisterForm() {
         id={'passwordConfirm'}
         name={'Confirm Password'}
         type={'password'}
-        required
         innerRef={passwordConfirmRef}
         inputError={formErrors.passwordConfirm}
         handleChange={handleChange}
@@ -128,7 +124,6 @@ export default function UserRegisterForm() {
         </legend>
         <NormalFormInput
           type={'text'}
-          required={true}
           defaultVal={''}
           id={'day'}
           name={'day'}
@@ -163,7 +158,6 @@ export default function UserRegisterForm() {
         </select>
         <NormalFormInput
           type={'text'}
-          required={true}
           defaultVal={''}
           id={'year'}
           name={'year'}
@@ -172,6 +166,9 @@ export default function UserRegisterForm() {
           innerRef={yearRef}
         />
       </div>
+      {formErrors.dob !== '' && (
+        <p className={'text-red-800 text-sm'}>{formErrors.dob}</p>
+      )}
       <button type={'submit'} className="py-1.5 rounded-sm bg-zinc-800 text-sm">
         Sign Up
       </button>
