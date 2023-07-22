@@ -169,7 +169,10 @@ export default function UserRegisterForm() {
       {formErrors.dob !== '' && (
         <p className={'text-red-800 text-sm'}>{formErrors.dob}</p>
       )}
-      <button type={'submit'} className="py-1.5 rounded-sm bg-zinc-800 text-sm">
+      <button
+        type={'submit'}
+        className="py-1.5 rounded-sm text-sm font-bold bg-red-800 hover:bg-red-900"
+      >
         Sign Up
       </button>
     </form>
