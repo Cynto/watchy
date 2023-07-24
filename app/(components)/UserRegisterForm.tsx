@@ -12,6 +12,13 @@ const initialFormErrors = {
   passwordConfirm: '',
   dob: '',
 };
+interface FormErrors {
+  email: string;
+  username: string;
+  password: string;
+  passwordConfirm: string;
+  dob: string;
+}
 
 export default function UserRegisterForm() {
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -22,17 +29,7 @@ export default function UserRegisterForm() {
   const monthRef = useRef<HTMLSelectElement | null>(null);
   const yearRef = useRef<HTMLInputElement | null>(null);
 
-  const [formErrors, setFormErrors] = useState<{
-    email: string;
-
-    username: string;
-
-    password: string;
-
-    passwordConfirm: string;
-
-    dob: string;
-  }>(initialFormErrors);
+  const [formErrors, setFormErrors] = useState<FormErrors>(initialFormErrors);
 
   const handleChange = (ref: MutableRefObject<HTMLInputElement>) => {
     let payload: { [key: string]: string } = {};
@@ -80,6 +77,41 @@ export default function UserRegisterForm() {
       setFormErrors(errs);
     } else if (formErrors !== initialFormErrors) {
       setFormErrors(initialFormErrors);
+    } else if (errVals.every((val) => val === '')) {
+      try {
+        const response = await fetch('http://localhost:8000/api/users/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userPayload),
+        });
+        const data = await response.json();
+
+        if (response.ok) {
+        } else {
+          setFormErrors((oldObj) => {
+            let newObj = { ...oldObj };
+            data.errors.forEach(
+              (err: {
+                type: string;
+                msg: string;
+                path: string;
+                value?: string;
+                location: string;
+              }) => {
+                if (newObj.hasOwnProperty(err.path)) {
+                  newObj[err.path as keyof FormErrors] = err.msg;
+                }
+              },
+            );
+            return newObj;
+          });
+        }
+        console.log(data);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
