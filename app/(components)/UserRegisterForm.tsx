@@ -33,7 +33,10 @@ export default function UserRegisterForm() {
 
   const handleChange = (ref: MutableRefObject<HTMLInputElement>) => {
     let payload: { [key: string]: string } = {};
-    payload[ref.current.id] = ref.current.value;
+    if (formErrors.hasOwnProperty(ref.current.id)) {
+      payload[ref.current.id as keyof FormErrors] = ref.current.value;
+    }
+
     if (ref.current.id === 'passwordConfirm' || ref.current.id === 'password') {
       payload = {
         passwordConfirm: passwordConfirmRef.current
@@ -43,7 +46,7 @@ export default function UserRegisterForm() {
       };
     }
 
-    if (ref.current.value !== '') {
+    if (ref.current.value !== '' && Object.keys(payload).length > 0) {
       const errs = validateUserRegistration(payload, formErrors);
       const errVals = Object.values(errs);
       if (!errVals.every((val) => val === '')) {
@@ -78,13 +81,22 @@ export default function UserRegisterForm() {
     } else if (formErrors !== initialFormErrors) {
       setFormErrors(initialFormErrors);
     } else if (errVals.every((val) => val === '')) {
+      const dobDate = new Date(
+        Number(userPayload.dob.year),
+        Number(userPayload.dob.month) - 1,
+        Number(userPayload.dob.day),
+      );
+      const payloadToSend = {
+        ...userPayload,
+        dob: dobDate,
+      };
       try {
         const response = await fetch('http://localhost:8000/api/users/add', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(userPayload),
+          body: JSON.stringify(payloadToSend),
         });
         const data = await response.json();
 
