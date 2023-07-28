@@ -211,7 +211,7 @@ export default function UserRegisterForm() {
         />
       </div>
       {formErrors.dob !== '' && (
-        <p className={'text-red-800 text-sm'}>{formErrors.dob}</p>
+        <p className={'input-error text-red-800 text-sm'}>{formErrors.dob}</p>
       )}
       <button
         type={'submit'}

@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import NormalFormInput from "@app/(components)/NormalFormInput";
-import { MutableRefObject } from "react";
+import { useState, useEffect } from 'react';
+import NormalFormInput from '@app/(components)/NormalFormInput';
+import { MutableRefObject } from 'react';
 
 export default function LabelWithInput({
   id,
@@ -43,7 +43,7 @@ export default function LabelWithInput({
         name={id}
         handleChange={handleChange}
       />
-      {error && <p className={"text-red-800 text-sm"}>{error}</p>}
+      {error && <p className={'input-error text-red-800 text-sm'}>{error}</p>}
     </div>
   );
 }
