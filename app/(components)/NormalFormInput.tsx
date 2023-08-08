@@ -1,4 +1,4 @@
-import { MutableRefObject } from "react";
+import { RefObject } from 'react';
 
 export default function NormalFormInput({
   type,
@@ -18,7 +18,7 @@ export default function NormalFormInput({
   id: string;
   name: string;
   width?: string;
-  innerRef?: MutableRefObject<HTMLInputElement | null>;
+  innerRef?: RefObject<HTMLInputElement>;
   handleChange?: Function;
 }) {
   return (
@@ -34,7 +34,7 @@ export default function NormalFormInput({
       }
       ref={innerRef}
       className={`${
-        width ? width : "w-full"
+        width ? width : 'w-full'
       } bg-zinc-900  text-gray-100 cursor-text flex text-[0.81rem] h-8 py-1 px-3 w-96 rounded border-[1px] hover:border-[2px] border-zinc-600 focus:outline-none focus:border-[4px] focus:border-red-800`}
     />
   );

@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, RefObject } from 'react';
 import NormalFormInput from '@app/(components)/NormalFormInput';
-import { MutableRefObject } from 'react';
 
 export default function LabelWithInput({
   id,
@@ -19,7 +18,7 @@ export default function LabelWithInput({
   type: string;
   placeholder?: string;
   required?: boolean;
-  innerRef?: MutableRefObject<HTMLInputElement | null>;
+  innerRef?: RefObject<HTMLInputElement>;
   inputError: string;
   handleChange?: Function;
 }) {
