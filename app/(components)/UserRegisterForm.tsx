@@ -6,7 +6,6 @@ import {
   useState,
   FormEvent,
 } from 'react';
-import NormalFormInput from '@app/(components)/NormalFormInput';
 import LabelWithInput from '@app/(components)/LabelWithInput';
 
 import validateUserRegistration from '@app/(validators)/validateUserRegistration';
