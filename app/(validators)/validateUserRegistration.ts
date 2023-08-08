@@ -37,8 +37,8 @@ const validateUserRegistration = (
   } else if (email !== undefined) errors.email = '';
 
   // Validate username
-  if (username !== undefined && (username.length < 3 || username.length > 16)) {
-    errors.username = '*Username must contain between 3 to 16 characters.';
+  if (username !== undefined && (username.length < 3 || username.length > 20)) {
+    errors.username = '*Username must contain between 3 to 20 characters.';
   } else if (
     username !== undefined &&
     !username.match(/^(?=.*[a-zA-Z])[a-zA-Z0-9_-]+$/)
