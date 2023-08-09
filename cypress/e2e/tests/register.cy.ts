@@ -65,4 +65,20 @@ describe('register page', () => {
 
     cy.get('.input-error').should('have.length', 0);
   });
+
+  it('should display loading overlay on submit, when fetch is called', () => {
+    cy.contains('label', 'Email').next('input').type('test@gmail.com');
+    cy.contains('label', 'Username').next('input').click().type('test');
+    cy.contains('label', 'Password').next('input').click().type('Test1245;');
+    cy.contains('label', 'Confirm Password')
+      .next('input')
+      .click()
+      .type('Test1245;');
+    cy.contains('legend', 'Date of Birth').next('input').click().type('1');
+    cy.get('#month').select(1);
+    cy.contains('legend', 'Date of Birth').nextAll('input').eq(1).type('2000');
+    cy.get('form button').click();
+
+    cy.get('.loading-overlay').should('exist');
+  });
 });
